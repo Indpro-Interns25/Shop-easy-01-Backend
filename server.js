@@ -5,6 +5,10 @@ const { notFound, errorHandler } = require("./middlewares/errorMiddleware");
 
 const userRoutes = require("./routes/userRoutes");
 const authRoutes = require("./routes/authRoutes");
+const productRoutes = require("./routes/productRoutes");
+const cartRoutes = require("./routes/cartRoutes");
+const wishlistRoutes = require("./routes/wishlistRoutes");
+const { testDatabase } = require("./controllers/testController");
 dotenv.config();
 
 const app = express();
@@ -24,9 +28,15 @@ app.get('/api/test', (req, res) => {
   res.json({ message: 'Backend connected successfully!', timestamp: new Date().toISOString() });
 });
 
+// Database test endpoint
+app.get('/api/test-db', testDatabase);
+
 // Routes
 app.use("/api/users", userRoutes);
 app.use("/api/auth", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cart", cartRoutes);
+app.use("/api/wishlist", wishlistRoutes);
 
 // Error handling
 app.use(notFound);
